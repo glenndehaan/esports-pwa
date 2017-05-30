@@ -1,0 +1,23 @@
+{
+  "name": "PWA",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch --watch-poll | webpack-dev-server --port 3000 --hot --host 0.0.0.0",
+    "build": "NODE_ENV=production webpack -p --progress"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2015-minimal": "^2.1.0",
+    "babel-runtime": "^6.23.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  }
+}

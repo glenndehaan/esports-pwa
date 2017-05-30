@@ -1,0 +1,115 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/MaterialIcons-Regular.eot"); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url("./fonts/MaterialIcons-Regular.woff2") format('woff2'),
+    url("./fonts/MaterialIcons-Regular.woff") format('woff'),
+    url("./fonts/MaterialIcons-Regular.ttf") format('truetype');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+#logo {
+    vertical-align: middle;
+}
+
+/**
+todo fix
+ */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+/**
+todo fix
+ */
+main {
+    flex: 1 0 auto;
+}
+
+/**
+hack!!!
+ */
+.spinner-layer {
+    border-color: #ba68c8 !important;
+}
+
+#preloader {
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    opacity: 1;
+
+    pointer-events: none;
+}
+#preloader.done{
+    opacity: 0;
+}
+
+#details {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    overflow-y: scroll;
+    height: calc(100% - 56px);
+    min-height: calc(100% - 56px);
+    background: white;
+    will-change: transform;
+    transform: translate3d(0, 100%, 0);
+    transition-duration: 0.2s;
+}
+
+.card-panel {
+    margin: 0 !important;
+}
+
+#details.opened {
+    transform: translate3d(0, 0, 0);
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+#match-details-btn {
+    cursor: pointer;
+}

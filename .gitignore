@@ -1,0 +1,13 @@
+# PhpStorm
+.idea
+
+# General files
+*~
+*.DS_STORE
+
+# Node
+npm-debug.log
+build/
+
+#Vagrant
+.vagrantuser

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Esports</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Web Application Manifest -->
+        <link rel="manifest" href="./manifest.json">
+        <link rel="shortcut icon" href="./favicon.ico">
+
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <!-- Color the status bar on mobile devices -->
+        <meta name="theme-color" content="#BA68C8">
+
+        <link rel="stylesheet" href="./main.css">
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="./css/materialize.min.css">
+    </head>
+    <body>
+        <header>
+            <div class="navbar-fixed">
+                <nav>
+                    <div class="nav-wrapper purple lighten-2">
+                        <a href="#" class="brand-logo left"><img id="logo" src="images/touch/gamepad_144x144.png" height="40px" alt="logo" /> Esports PWA</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;" id="preloader" class="done">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-purple-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="details">
+                <div class="card-panel white">
+                    <div id="match-details">
+                      <h3>Match Title</h3>
+                      <span>Team 1: 1</span><br/>
+                      <span>Team 2: 0</span>
+                      <hr/>
+                    </div>
+                    <div id="game-details">
+
+                        <div class="row">
+                            <div class="col s12 m6">
+                                <div class="card">
+                                    <div class="card-image">
+                                        <img src="images/maps/de-dust2.png" height="200px">
+                                        <span class="card-title">Card Title<br/><h6>Map: de_dust2</h6></span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="card">
+                                    <div class="card-image">
+                                        <img src="images/maps/de-nuke.png" height="200px">
+                                        <span class="card-title">Card Title<br/><h6>Map: de_dust2</h6></span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      <h5>Game: 1</h5>
+                      <h6>Map: A map</h6>
+                      <span>
+                          Team 1 Wins: 10<br/>
+                          Team 1 CT Wins: 5<br/>
+                          Team 1 T Wins: 5<br/>
+                          <br/>
+                          Team 2 Wins: 15<br/>
+                          Team 2 CT Wins: 10<br/>
+                          Team 2 T Wins: 5<br/>
+                      </span>
+
+                      <hr/>
+
+                      <h5>Player stats:</h5>
+                      <h6>Team 1:</h6>
+                      <span>
+                          Player 1 Kills: 10<br/>
+                          Player 2 Kills: 10<br/>
+                          Player 3 Kills: 10<br/>
+                          Player 4 Kills: 10<br/>
+                          Player 5 Kills: 10<br/>
+                      </span>
+
+                      <h6>Team 2:</h6>
+                      <span>
+                          Player 1 Kills: 10<br/>
+                          Player 2 Kills: 10<br/>
+                          Player 3 Kills: 10<br/>
+                          Player 4 Kills: 10<br/>
+                          Player 5 Kills: 10<br/>
+                      </span>
+                    </div>
+                </div>
+            </div>
+
+            <ul id="items" class="collection"></ul>
+        </main>
+
+        <footer style="margin-bottom: 84px;">
+            <div id="search-container" class="card-panel" style="display: none;">
+                <input id="search" type="text" placeholder="Team name" />
+                <a id="submit" class="waves-effect waves-light btn purple lighten-2">Search</a>
+            </div>
+        </footer>
+
+        <div id="search-btn" class="fixed-action-btn scale-transition">
+            <a class="btn-floating btn-large purple lighten-2">
+                <i class="large material-icons">search</i>
+            </a>
+        </div>
+
+        <div id="search-btn-hide" class="fixed-action-btn scale-transition scale-out">
+            <a class="btn-floating btn-large purple lighten-2">
+                <i class="large material-icons">done</i>
+            </a>
+        </div>
+
+        <div id="close-match-details" class="fixed-action-btn" style="z-index: 1000; display: none;">
+            <a class="btn-floating btn-large purple lighten-2">
+                <i class="large material-icons">done</i>
+            </a>
+        </div>
+
+        <script>
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+        </script>
+        <script src="./build/bundle.js"></script>
+    </body>
+</html>
