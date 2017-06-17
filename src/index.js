@@ -4,16 +4,25 @@ import {loadState, saveState} from './storage';
 console.log('PWA working!');
 
 const initialize = () => {
-    const apiUri = "https://esports.glenndehaan.com";
+    //PROD
+    // const apiUri = "https://esports.glenndehaan.com";
+    //DEV
+    const apiUri = "http://192.168.50.2";
+    const games_names = ["csgo", "overwatch"];
 
-    let teams = loadState('teams') || [];
+    let teams = loadState('teams') || {};
     let matches = loadState('matches') || {};
+    let team_game = loadState('team_game') || {};
     let network = navigator.onLine;
+
+    window.teams = teams;
+    window.matches = matches;
+    window.team_game = team_game;
 
     const updateSWData = () => {
         for (let key in matches) {
             if (matches.hasOwnProperty(key)) {
-                new api(apiUri + "/api/matches/csgo/" + key + "?extraData=true", processMatchData, key);
+                new api(apiUri + "/api/matches/" + team_game[key] + "/" + key + "?extraData=true", processMatchData, key);
             }
         }
     };
@@ -50,8 +59,8 @@ const initialize = () => {
         matchContainer.innerHTML += `
             <h3>${gameData.competition_label} (${gameData.round_label})</h3>
             ${date.getDate() < 9 ? '0'+date.getDate() : date.getDate()}-${(date.getMonth() + 1) < 9 ? '0'+(date.getMonth() + 1) : date.getMonth()}-${date.getFullYear()}<br/>
-            ${gameData.team1_url === "/csgo/teams/" + id ? "<b>" + gameData.team1_data.full_name + ":</b>" : gameData.team1_data.full_name + ":"} ${gameData.team1_score}<br/>
-            ${gameData.team2_url === "/csgo/teams/" + id ? "<b>" + gameData.team2_data.full_name + ":</b>" : gameData.team2_data.full_name + ":"} ${gameData.team2_score}
+            ${gameData.team1_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team1_data.full_name + ":</b>" : gameData.team1_data.full_name + ":"} ${gameData.team1_score}<br/>
+            ${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + ":</b>" : gameData.team2_data.full_name + ":"} ${gameData.team2_score}
             <hr/>
         `;
 
@@ -66,21 +75,21 @@ const initialize = () => {
                         </div>
                         <div class="card-content">
                             <span>
-                              ${gameData.team1_url === "/csgo/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} Wins: ${gameData.game_data[item].team1_map_round_wins}<br/>
-                              ${gameData.team1_url === "/csgo/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} CT Wins: ${gameData.game_data[item].team1_counter_terrorist_map_round_wins}<br/>
-                              ${gameData.team1_url === "/csgo/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} T Wins: ${gameData.game_data[item].team1_terrorist_map_round_wins}<br/>
+                              ${gameData.team1_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} Wins: ${gameData.game_data[item].team1_map_round_wins}<br/>
+                              ${gameData.team1_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} CT Wins: ${gameData.game_data[item].team1_counter_terrorist_map_round_wins}<br/>
+                              ${gameData.team1_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} T Wins: ${gameData.game_data[item].team1_terrorist_map_round_wins}<br/>
                               <br/>
-                              ${gameData.team2_url === "/csgo/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} Wins: ${gameData.game_data[item].team2_map_round_wins}<br/>
-                              ${gameData.team2_url === "/csgo/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} CT Wins: ${gameData.game_data[item].team2_counter_terrorist_map_round_wins}<br/>
-                              ${gameData.team2_url === "/csgo/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} T Wins: ${gameData.game_data[item].team2_terrorist_map_round_wins}<br/>
+                              ${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} Wins: ${gameData.game_data[item].team2_map_round_wins}<br/>
+                              ${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} CT Wins: ${gameData.game_data[item].team2_counter_terrorist_map_round_wins}<br/>
+                              ${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} T Wins: ${gameData.game_data[item].team2_terrorist_map_round_wins}<br/>
                             </span>
                             
                             <h5>Player stats:</h5>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>${gameData.team1_url === "/csgo/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} (K/A/D)</th>
-                                        <th>${gameData.team2_url === "/csgo/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} (K/A/D)</th>
+                                        <th>${gameData.team1_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team1_data.full_name + "</b>" : gameData.team1_data.full_name} (K/A/D)</th>
+                                        <th>${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} (K/A/D)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,18 +135,27 @@ const initialize = () => {
 
         e.target.innerHTML = "<i class='material-icons green accent-3'>done</i>";
 
-        teams.push(e.target.dataset);
-        saveState({teams, matches});
+        typeof teams[e.target.dataset.game] === "undefined" ? teams[e.target.dataset.game] = [] : false;
 
-        new api(apiUri + "/api/matches/csgo/" + e.target.dataset.id + "?extraData=true", processMatchData, e.target.dataset.id);
+        teams[e.target.dataset.game].push(e.target.dataset);
+
+        team_game[e.target.dataset.id] = e.target.dataset.game;
+
+        saveState({teams, matches, team_game});
+
+        new api(apiUri + "/api/matches/" + e.target.dataset.game + "/" + e.target.dataset.id + "?extraData=true", processMatchData, e.target.dataset.id);
     };
 
     const removeItem = (e) => {
-        teams = teams.filter(function (obj) {
+        teams[e.target.parentNode.parentNode.parentNode.dataset.game] = teams[e.target.parentNode.parentNode.parentNode.dataset.game].filter(function (obj) {
             return obj.id !== e.target.parentNode.parentNode.parentNode.dataset.id;
         });
 
-        saveState({teams, matches});
+        delete matches[e.target.parentNode.parentNode.parentNode.dataset.id];
+        delete team_game[e.target.parentNode.parentNode.parentNode.dataset.id];
+
+        saveState({teams, matches, team_game});
+        console.log('teams', teams);
 
         e.target.parentNode.removeEventListener("click", removeItem);
         e.target.parentNode.removeEventListener("click", infoItem);
@@ -163,12 +181,12 @@ const initialize = () => {
 
                 container.innerHTML += `
                     <li class="collection-item avatar">
-                        <i id="match-details-btn" data-team="${id}" data-key="${item}" class="material-icons circle purple lighten-2">insert_chart</i>
+                        ${dataset[item].game_data.length > 0 ? `<i id="match-details-btn" data-team="${id}" data-key="${item}" class="material-icons circle purple lighten-2">insert_chart</i>` : `<i id="match-details-btn-gray" class="material-icons circle blue-grey lighten-4">insert_chart</i>`}
                         <span class="title">${dataset[item].competition_label} (${dataset[item].round_label})</span>
                         <p>
                             ${date.getDate() < 9 ? '0'+date.getDate() : date.getDate()}-${(date.getMonth() + 1) < 9 ? '0'+(date.getMonth() + 1) : date.getMonth()}-${date.getFullYear()}<br/>
-                            ${dataset[item].team1_url === "/csgo/teams/" + id ? "<b>" + dataset[item].team1_data.full_name + ":</b>" : dataset[item].team1_data.full_name + ":"} ${dataset[item].team1_score}<br/>
-                            ${dataset[item].team2_url === "/csgo/teams/" + id ? "<b>" + dataset[item].team2_data.full_name + ":</b>" : dataset[item].team2_data.full_name + ":"} ${dataset[item].team2_score}
+                            ${dataset[item].team1_url === "/" + dataset[item].game + "/teams/" + id ? "<b>" + dataset[item].team1_data.full_name + ":</b>" : dataset[item].team1_data.full_name + ":"} ${dataset[item].team1_score}<br/>
+                            ${dataset[item].team2_url === "/" + dataset[item].game + "/teams/" + id ? "<b>" + dataset[item].team2_data.full_name + ":</b>" : dataset[item].team2_data.full_name + ":"} ${dataset[item].team2_score}
                         </p>
                         
                         ${dataset[item].game_streams.length > 0 && dataset[item].game_streams[0].streams.length > 0 ? 
@@ -195,7 +213,7 @@ const initialize = () => {
         console.log('matchData', data.matches);
         matches[id] = data.matches;
 
-        saveState({teams, matches});
+        saveState({teams, matches, team_game});
     };
 
     const processSwData = (data) => {
@@ -204,22 +222,32 @@ const initialize = () => {
         const container = document.querySelector('#items');
         container.innerHTML = '';
 
-        for (let row = 0; row < data.length; row++) {
-            container.innerHTML += `
-            <li data-id="${data[row].id}" class="collection-item avatar">${data[row].logo && data[row].logo !== "false" ?
-                `<img src=${data[row].logo} alt="" class="circle">` :
-                '<i class="material-icons circle">report_problem</i>'} 
-                <span class="title">${data[row].name}</span>
-                <p>${data[row].country !== "null" ? data[row].country : ""}</p>
-                <div class="secondary-content">
-                    <a id="info-btn" class="btn-floating btn-large waves-effect waves-light purple lighten-2">
-                        <i class='material-icons purple lighten-2'>info</i>
-                    </a>
-                    <a id="add-btn" class="btn-floating btn-large waves-effect waves-light purple lighten-2">
-                        <i class='material-icons red'>delete</i>
-                    </a>
-                </div>
-             </li>`;
+        for(let gm = 0; gm < games_names.length; gm++) {
+            if(typeof data[games_names[gm]] !== "undefined") {
+                for (let row = 0; row < data[games_names[gm]].length; row++) {
+                    if(row === 0){
+                        container.innerHTML += `
+                            <li class="collection-header"><h4>${data[games_names[gm]][row].game}</h4></li>
+                        `
+                    }
+
+                    container.innerHTML += `
+                    <li data-game="${data[games_names[gm]][row].game}" data-id="${data[games_names[gm]][row].id}" class="collection-item avatar">${data[games_names[gm]][row].logo && data[games_names[gm]][row].logo !== "false" ?
+                                `<img src=${data[games_names[gm]][row].logo} alt="" class="circle">` :
+                                '<i class="material-icons circle">report_problem</i>'} 
+                        <span class="title">${data[games_names[gm]][row].name}</span>
+                        <p>${data[games_names[gm]][row].country !== "null" ? data[games_names[gm]][row].country : ""}</p>
+                        <div class="secondary-content">
+                            <a id="info-btn" class="btn-floating btn-large waves-effect waves-light purple lighten-2">
+                                <i class='material-icons purple lighten-2'>info</i>
+                            </a>
+                            <a id="add-btn" class="btn-floating btn-large waves-effect waves-light purple lighten-2">
+                                <i class='material-icons red'>delete</i>
+                            </a>
+                        </div>
+                     </li>`;
+                }
+            }
         }
 
         const add_buttons = document.querySelectorAll("#add-btn");
@@ -241,12 +269,21 @@ const initialize = () => {
         hidePreloader();
 
         const container = document.querySelector('#items');
-        container.innerHTML = '';
 
         for (let row = 0; row < data.teams.length; row++) {
-            const exists = teams.some(function (el) {
-                return el.id === ''+data.teams[row].id;
-            });
+            let exists = false;
+
+            if(typeof teams[data.teams[0].game] !== "undefined") {
+                exists = teams[data.teams[0].game].some(function (el) {
+                    return el.id === '' + data.teams[row].id;
+                });
+            }
+
+            if(row === 0){
+                container.innerHTML += `
+                    <li class="collection-header"><h4>${data.teams[row].game}</h4></li>
+                `
+            }
 
             const available = data.teams[row].alternate_logo && data.teams[row].alternate_logo !== null && data.teams[row].alternate_logo.w72xh72 !== null;
             container.innerHTML += `
@@ -257,19 +294,20 @@ const initialize = () => {
                 <p>${data.teams[row].country !== "null" && data.teams[row].country !== null && data.teams[row].country !== "" ? data.teams[row].country : ""}</p>
                 ${!exists ? `
                 <a id="add-btn" class="secondary-content btn-floating btn-large waves-effect waves-light purple lighten-2">
-                    <i data-id="${data.teams[row].id}" data-name="${data.teams[row].full_name}" data-country="${data.teams[row].country}" data-logo="${available ? data.teams[row].alternate_logo.w72xh72 : false}" class="material-icons">add</i>
+                    <i data-game="${data.teams[row].game}" data-id="${data.teams[row].id}" data-name="${data.teams[row].full_name}" data-country="${data.teams[row].country}" data-logo="${available ? data.teams[row].alternate_logo.w72xh72 : false}" class="material-icons">add</i>
                 </a>` : ''}
              </li>`;
         }
 
-        const buttons = document.querySelectorAll("#add-btn");
-
-        for (let item = 0; item < buttons.length; item++) {
-            buttons[item].addEventListener("click", saveItem);
-        }
-
         if(data.teams.length === 0){
             container.innerHTML += "<li style='text-align: center' class='collection-item'><b>Whoops looks like we didn't find anything.........</b></li>";
+        }
+
+        let buttons = document.querySelectorAll("#add-btn");
+
+        for (let item = 0; item < buttons.length; item++) {
+            console.log('buttons[item]', buttons[item]);
+            buttons[item].addEventListener("click", saveItem);
         }
     };
 
@@ -292,9 +330,9 @@ const initialize = () => {
         const search_btn_hide = document.querySelector('#search-btn-hide');
 
         container.innerHTML = '';
-        if (teams.length > 0) {
-            processSwData(teams);
-        }
+
+        processSwData(teams);
+
         searchDisplay.style.display = "none";
 
         if (network) {
@@ -317,7 +355,13 @@ const initialize = () => {
     if (document.querySelector("#submit")) {
         document.querySelector("#submit").addEventListener("click", () => {
             showPreloader();
-            new api(apiUri + "/api/teams/csgo/" + document.querySelector("#search").value, processApiData)
+
+            const container = document.querySelector('#items');
+            container.innerHTML = '';
+
+            for(let gm = 0; gm < games_names.length; gm++) {
+                new api(apiUri + "/api/teams/" + games_names[gm] + "/" + document.querySelector("#search").value, processApiData)
+            }
         });
     }
     if (document.querySelector("#search")) {
@@ -325,7 +369,12 @@ const initialize = () => {
             const key = e.which || e.keyCode;
             if (key === 13) {
                 showPreloader();
-                new api(apiUri + "/api/teams/csgo/" + document.querySelector("#search").value, processApiData)
+                const container = document.querySelector('#items');
+                container.innerHTML = '';
+
+                for(let gm = 0; gm < games_names.length; gm++) {
+                    new api(apiUri + "/api/teams/" + games_names[gm] + "/" + document.querySelector("#search").value, processApiData)
+                }
             }
         });
     }
@@ -345,9 +394,7 @@ const initialize = () => {
     window.addEventListener('online', networkStatus);
     window.addEventListener('offline', networkStatus);
 
-    if (teams.length > 0) {
-        processSwData(teams);
-    }
+    processSwData(teams);
 
     console.log('matches', matches);
 

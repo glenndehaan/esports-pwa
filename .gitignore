@@ -5,9 +5,13 @@
 *~
 *.DS_STORE
 
-# Node
-npm-debug.log
+# Js & css build files
 build/
 
-#Vagrant
+# Dependency managers
+node_modules/
+npm-debug.log
+
+# Vagrant specific
+.vagrant/
 .vagrantuser
