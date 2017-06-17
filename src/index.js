@@ -227,7 +227,7 @@ const initialize = () => {
                 for (let row = 0; row < data[games_names[gm]].length; row++) {
                     if(row === 0){
                         container.innerHTML += `
-                            <li class="collection-header"><h4>${data[games_names[gm]][row].game}</h4></li>
+                            <li class="collection-header"><img width="100%" src="images/logos/${data[games_names[gm]][row].game}.png" /></li>
                         `
                     }
 
@@ -281,7 +281,7 @@ const initialize = () => {
 
             if(row === 0){
                 container.innerHTML += `
-                    <li class="collection-header"><h4>${data.teams[row].game}</h4></li>
+                    <li class="collection-header"><img width="100%" src="images/logos/${data.teams[row].game}.png" /></li>
                 `
             }
 
