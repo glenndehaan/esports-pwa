@@ -2,6 +2,8 @@
 
 A small easy to use Progressive Web App used to track Esports stats.
 
+![Image of Esports PWA](https://user-images.githubusercontent.com/7496187/27261161-4c3f8286-543d-11e7-990b-60d4c70d61ab.png)
+
 ## Structure
 The base of this project was created by Colin van Eenige (https://github.com/vaneenige).
 Do also checkout his latest creations.
