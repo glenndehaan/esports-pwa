@@ -14,6 +14,10 @@ Do also checkout his latest creations.
 - Offline support
 - Add to homescreen (android)
 
+## Supported Game's
+- Counter Strike :: Global Offensive
+- Overwatch
+
 ## Usage
 I'm using Docker to run a dev version off the PWA.
 To start using this PWA download the latest version of Docker.
