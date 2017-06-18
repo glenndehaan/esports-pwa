@@ -17,6 +17,7 @@ Do also checkout his latest creations.
 ## Supported Game's
 - Counter Strike :: Global Offensive
 - Overwatch
+- Call of Duty
 
 ## Usage
 I'm using Docker to run a dev version off the PWA.

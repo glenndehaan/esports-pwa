@@ -8,7 +8,7 @@ const initialize = () => {
     // const apiUri = "https://esports.glenndehaan.com";
     //DEV
     const apiUri = "http://192.168.50.2";
-    const games_names = ["csgo", "overwatch"];
+    const games_names = ["csgo", "overwatch", "cod"];
 
     let teams = loadState('teams') || {};
     let matches = loadState('matches') || {};
@@ -70,8 +70,8 @@ const initialize = () => {
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img src="images/maps/de-${gameData.game_data[item].map_data.name.toLowerCase()}.png" height="200px">
-                            <span class="card-title">Game: ${gameData.game_data[item].game_number}<br/><h6>Map: de_${gameData.game_data[item].map_data.name.toLowerCase()}</h6></span>
+                            <img src=${gameData.game_data[item].game === "csgo" ? `images/maps/de-${gameData.game_data[item].map_data.name.toLowerCase()}.png` : 'images/maps/fallback.png'} height="200px">
+                            <span class="card-title">Game: ${gameData.game_data[item].game_number}<br/>${gameData.game_data[item].map_data ? `<h6>Map: ${gameData.game_data[item].game === "csgo" ? 'de_' : ''}${gameData.game_data[item].map_data.name.toLowerCase()}</h6>` : ''}</span>
                         </div>
                         <div class="card-content">
                             <span>
@@ -84,7 +84,7 @@ const initialize = () => {
                               ${gameData.team2_url === "/" + gameData.game + "/teams/" + id ? "<b>" + gameData.team2_data.full_name + "</b>" : gameData.team2_data.full_name} T Wins: ${gameData.game_data[item].team2_terrorist_map_round_wins}<br/>
                             </span>
                             
-                            <h5>Player stats:</h5>
+                            ${gameData.game_data[item].team1_game_player_records.length > 0 && gameData.game_data[item].team2_game_player_records.length > 0 ? `<h5>Player stats:</h5>
                             <table>
                                 <thead>
                                     <tr>
@@ -114,7 +114,7 @@ const initialize = () => {
                                         <td>${gameData.game_data[item].team2_game_player_records[4].player_data.in_game_name}: (${gameData.game_data[item].team2_game_player_records[4].kills}/${gameData.game_data[item].team2_game_player_records[4].assists}/${gameData.game_data[item].team2_game_player_records[4].deaths})</td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table>` : ''}
                         </div>
                     </div>
                 </div>
@@ -306,7 +306,6 @@ const initialize = () => {
         let buttons = document.querySelectorAll("#add-btn");
 
         for (let item = 0; item < buttons.length; item++) {
-            console.log('buttons[item]', buttons[item]);
             buttons[item].addEventListener("click", saveItem);
         }
     };
