@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --watch --watch-poll | webpack-dev-server --port 3000 --hot --host 0.0.0.0",
+    "dev": "webpack --watch --watch-poll | webpack-dev-server --port 3000 --hot --host 0.0.0.0 --content-base ../public",
     "build": "NODE_ENV=production webpack -p --progress"
   },
   "author": "",

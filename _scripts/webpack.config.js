@@ -7,10 +7,10 @@ module.exports = {
         poll: true
     },
 
-    entry: `${__dirname}/src/index.js`,
+    entry: `${__dirname}/../public/src/index.js`,
 
     output: {
-        path: `${__dirname}/build/`,
+        path: `${__dirname}/../public/build/`,
         publicPath: __dirname,
         filename: 'bundle.js',
     },
