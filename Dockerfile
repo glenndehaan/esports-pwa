@@ -4,7 +4,7 @@ FROM node
 # Set the working directory to /app
 WORKDIR /app
 
-# Make port 9000 available to the world outside this container
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
 
 # Run npm run dev when the container launches
